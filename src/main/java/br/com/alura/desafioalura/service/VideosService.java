@@ -1,8 +1,8 @@
 package br.com.alura.desafioalura.service;
 
-import br.com.alura.desafioalura.dto.DadosAtualizarVideo;
-import br.com.alura.desafioalura.dto.DadosCriarVideo;
-import br.com.alura.desafioalura.dto.DadosListagemVideo;
+import br.com.alura.desafioalura.dto.videos.DadosAtualizarVideo;
+import br.com.alura.desafioalura.dto.videos.DadosCriarVideo;
+import br.com.alura.desafioalura.dto.videos.DadosListagemVideo;
 import br.com.alura.desafioalura.models.Video;
 import br.com.alura.desafioalura.repositories.VideosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,19 +41,6 @@ public class VideosService {
         video.setUrl("www.aluraflix.com/watch?id="+video.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(video);
     }
-
-//    @Transactional
-//    public ResponseEntity<?> atualizarDadosVideo(DadosAtualizarVideo dados) {
-//        if (videosRepository.existsById(dados.id())) {
-//            var video = videosRepository.findById(dados.id()).get();
-//            if (video.estaAtivo()) {
-//                video.atualizarDadosVideo(dados);
-//                return ResponseEntity.status(HttpStatus.OK).body(video);
-//            }
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Video inativo.");
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não encontrado.");
-//    }
 
     @Transactional
     public ResponseEntity<?> atualizarDadosVideo(DadosAtualizarVideo dados) {

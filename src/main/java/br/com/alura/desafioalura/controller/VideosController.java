@@ -1,8 +1,8 @@
 package br.com.alura.desafioalura.controller;
 
-import br.com.alura.desafioalura.dto.DadosAtualizarVideo;
-import br.com.alura.desafioalura.dto.DadosCriarVideo;
-import br.com.alura.desafioalura.dto.DadosListagemVideo;
+import br.com.alura.desafioalura.dto.videos.DadosAtualizarVideo;
+import br.com.alura.desafioalura.dto.videos.DadosCriarVideo;
+import br.com.alura.desafioalura.dto.videos.DadosListagemVideo;
 import br.com.alura.desafioalura.service.VideosService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/videos")

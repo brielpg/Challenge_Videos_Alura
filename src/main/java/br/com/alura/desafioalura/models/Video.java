@@ -1,7 +1,7 @@
 package br.com.alura.desafioalura.models;
 
-import br.com.alura.desafioalura.dto.DadosAtualizarVideo;
-import br.com.alura.desafioalura.dto.DadosCriarVideo;
+import br.com.alura.desafioalura.dto.videos.DadosAtualizarVideo;
+import br.com.alura.desafioalura.dto.videos.DadosCriarVideo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
