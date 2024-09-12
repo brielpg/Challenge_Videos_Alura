@@ -28,7 +28,7 @@ public class VideosService {
     public Optional<?> listarVideoPorId(Long id) {
         if (videosRepository.existsById(id)){
             var video = videosRepository.getReferenceById(id);
-            if (video.estaAtivo()) {
+            if (video.isAtivo()) {
                 return Optional.of(new DadosListagemVideo(video));
             }
         }
@@ -46,7 +46,7 @@ public class VideosService {
     public ResponseEntity<?> atualizarDadosVideo(DadosAtualizarVideo dados) {
         if (videosRepository.existsById(dados.id())) {
             var video = videosRepository.getReferenceById(dados.id());
-            if (video.estaAtivo()) {
+            if (video.isAtivo()) {
                 video.atualizarDadosVideo(dados);
                 return ResponseEntity.status(HttpStatus.OK).body(new DadosListagemVideo(video));
             }
@@ -58,8 +58,8 @@ public class VideosService {
     @Transactional
     public ResponseEntity<String> deletarVideo(Long id) {
         var video = videosRepository.getReferenceById(id);
-        if (video.estaAtivo()){
-            video.desativar();
+        if (video.isAtivo()){
+            video.setAtivo(false);
             return ResponseEntity.status(HttpStatus.OK).body("Video desativado com sucesso!");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: Video ja esta desativado!");
@@ -67,8 +67,8 @@ public class VideosService {
 
     public ResponseEntity<String> ativarVideo(Long id) {
         var video = videosRepository.getReferenceById(id);
-        if (!video.estaAtivo()){
-            video.ativar();
+        if (!video.isAtivo()){
+            video.setAtivo(true);
             return ResponseEntity.status(HttpStatus.OK).body("Video ativado com sucesso!");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: Video ja esta ativo!");

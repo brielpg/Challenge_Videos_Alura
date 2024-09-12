@@ -37,16 +37,4 @@ public class Video {
             this.descricao = dados.descricao();
         }
     }
-
-    public void desativar() {
-        this.ativo = false;
-    }
-
-    public boolean estaAtivo() {
-        return this.ativo;
-    }
-
-    public void ativar() {
-        this.ativo = true;
-    }
 }
