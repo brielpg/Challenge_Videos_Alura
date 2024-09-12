@@ -1,4 +1,4 @@
-package br.com.alura.desafioalura.dto;
+package br.com.alura.desafioalura.dto.videos;
 
 import br.com.alura.desafioalura.models.Video;
 
