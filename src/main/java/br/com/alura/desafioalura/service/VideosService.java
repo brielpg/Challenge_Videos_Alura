@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class VideosService {
@@ -43,13 +42,26 @@ public class VideosService {
         return ResponseEntity.status(HttpStatus.CREATED).body(video);
     }
 
+//    @Transactional
+//    public ResponseEntity<?> atualizarDadosVideo(DadosAtualizarVideo dados) {
+//        if (videosRepository.existsById(dados.id())) {
+//            var video = videosRepository.findById(dados.id()).get();
+//            if (video.estaAtivo()) {
+//                video.atualizarDadosVideo(dados);
+//                return ResponseEntity.status(HttpStatus.OK).body(video);
+//            }
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Video inativo.");
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não encontrado.");
+//    }
+
     @Transactional
     public ResponseEntity<?> atualizarDadosVideo(DadosAtualizarVideo dados) {
         if (videosRepository.existsById(dados.id())) {
             var video = videosRepository.getReferenceById(dados.id());
             if (video.estaAtivo()) {
                 video.atualizarDadosVideo(dados);
-                return ResponseEntity.status(HttpStatus.OK).body(video);
+                return ResponseEntity.status(HttpStatus.OK).body(new DadosListagemVideo(video));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Video inativo.");
         }
