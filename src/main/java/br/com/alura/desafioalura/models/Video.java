@@ -3,10 +3,7 @@ package br.com.alura.desafioalura.models;
 import br.com.alura.desafioalura.dto.videos.DadosAtualizarVideo;
 import br.com.alura.desafioalura.dto.videos.DadosCriarVideo;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity(name = "Video")
 @Table(name = "videos")
@@ -14,6 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode(of = "id")
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
