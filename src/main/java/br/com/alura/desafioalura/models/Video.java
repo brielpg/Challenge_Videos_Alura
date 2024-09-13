@@ -16,6 +16,8 @@ public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "categoriaId")
+    private int categoriaId;
     private String titulo;
     private String descricao;
     private String url;
@@ -25,10 +27,21 @@ public class Video {
         this.titulo = dados.titulo();
         this.descricao = dados.descricao();
         this.url = "www.aluraflix.com";
+
+        if (dados.categoriaId() != 0 && dados.categoriaId() > 0){
+            this.categoriaId = dados.categoriaId();
+        }else{
+            this.categoriaId = 1;
+        }
+
         this.ativo = true;
     }
 
     public void atualizarDadosVideo(DadosAtualizarVideo dados) {
+        if (dados.categoriaId() != 0 && dados.categoriaId() > 0){
+            this.categoriaId = dados.categoriaId();
+        }
+
         if (dados.titulo() != null){
             this.titulo = dados.titulo();
         }

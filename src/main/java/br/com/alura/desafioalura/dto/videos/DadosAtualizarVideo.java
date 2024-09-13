@@ -6,6 +6,7 @@ public record DadosAtualizarVideo(
         @NotNull(message = "O campo id é obrigatório")
         Long id,
         String titulo,
-        String descricao
+        String descricao,
+        int categoriaId
 ) {
 }

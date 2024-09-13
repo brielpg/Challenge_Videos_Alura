@@ -8,6 +8,7 @@ import br.com.alura.desafioalura.repositories.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,7 +61,7 @@ public class CategoriasService {
     public ResponseEntity<?> criarCategoria(DadosCriarCategoria dados) {
         if (!categoriasRepository.existsByTitulo(dados.titulo())){
             var categoria = categoriasRepository.save(new Categoria(dados));
-            return ResponseEntity.ok(new DadosListagemCategoria(categoria));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new DadosListagemCategoria(categoria));
         }
         return ResponseEntity.badRequest().body("Erro: categoria ja existe");
     }

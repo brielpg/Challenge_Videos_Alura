@@ -13,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 public class VideosService {
 
@@ -25,14 +23,15 @@ public class VideosService {
         return videosRepository.findAllByAtivoTrue(paginacao).map(DadosListagemVideo::new);
     }
 
-    public Optional<?> listarVideoPorId(Long id) {
+    public ResponseEntity<?> listarVideoPorId(Long id) {
         if (videosRepository.existsById(id)){
             var video = videosRepository.getReferenceById(id);
             if (video.isAtivo()) {
-                return Optional.of(new DadosListagemVideo(video));
+                return ResponseEntity.ok().body(new DadosListagemVideo(video));
             }
+            return ResponseEntity.badRequest().body("Erro: Video inativo.");
         }
-        return Optional.of("Não encontrado.");
+        return ResponseEntity.badRequest().body("Erro: Não encontrado.");
     }
 
     @Transactional
@@ -48,11 +47,11 @@ public class VideosService {
             var video = videosRepository.getReferenceById(dados.id());
             if (video.isAtivo()) {
                 video.atualizarDadosVideo(dados);
-                return ResponseEntity.status(HttpStatus.OK).body(new DadosListagemVideo(video));
+                return ResponseEntity.ok().body(new DadosListagemVideo(video));
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Video inativo.");
+            return ResponseEntity.badRequest().body("Erro: Video inativo.");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não encontrado.");
+        return ResponseEntity.badRequest().body("Erro: Não encontrado.");
     }
 
     @Transactional
@@ -60,17 +59,17 @@ public class VideosService {
         var video = videosRepository.getReferenceById(id);
         if (video.isAtivo()){
             video.setAtivo(false);
-            return ResponseEntity.status(HttpStatus.OK).body("Video desativado com sucesso!");
+            return ResponseEntity.ok().body("Video desativado com sucesso!");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: Video ja esta desativado!");
+        return ResponseEntity.badRequest().body("Erro: Video ja esta desativado!");
     }
 
     public ResponseEntity<String> ativarVideo(Long id) {
         var video = videosRepository.getReferenceById(id);
         if (!video.isAtivo()){
             video.setAtivo(true);
-            return ResponseEntity.status(HttpStatus.OK).body("Video ativado com sucesso!");
+            return ResponseEntity.ok().body("Video ativado com sucesso!");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: Video ja esta ativo!");
+        return ResponseEntity.badRequest().body("Erro: Video ja esta ativo!");
     }
 }

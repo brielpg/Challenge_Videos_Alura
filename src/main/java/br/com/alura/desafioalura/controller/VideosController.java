@@ -27,7 +27,7 @@ public class VideosController {
     }
 
     @GetMapping("/{id}")
-    public Optional<?> listarVideoPorId(@PathVariable Long id){
+    public ResponseEntity<?> listarVideoPorId(@PathVariable Long id){
         return videosService.listarVideoPorId(id);
     }
 
