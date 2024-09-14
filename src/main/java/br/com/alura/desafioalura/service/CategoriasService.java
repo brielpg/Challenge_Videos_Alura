@@ -3,8 +3,10 @@ package br.com.alura.desafioalura.service;
 import br.com.alura.desafioalura.dto.categorias.DadosAtualizarCategoria;
 import br.com.alura.desafioalura.dto.categorias.DadosCriarCategoria;
 import br.com.alura.desafioalura.dto.categorias.DadosListagemCategoria;
+import br.com.alura.desafioalura.dto.videos.DadosListagemVideo;
 import br.com.alura.desafioalura.models.Categoria;
 import br.com.alura.desafioalura.repositories.CategoriasRepository;
+import br.com.alura.desafioalura.repositories.VideosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,9 @@ public class CategoriasService {
 
     @Autowired
     private CategoriasRepository categoriasRepository;
+
+    @Autowired
+    private VideosRepository videosRepository;
 
     public Page<DadosListagemCategoria> listarCategorias(Pageable paginacao) {
         return categoriasRepository.findByAtivoTrue(paginacao).map(DadosListagemCategoria::new);
@@ -34,6 +39,7 @@ public class CategoriasService {
         return ResponseEntity.badRequest().body("Erro: Não encontrado.");
     }
 
+    @Transactional
     public ResponseEntity<?> deletarCategoria(Long id) {
         if (categoriasRepository.existsById(id)) {
             var categoria = categoriasRepository.getReferenceById(id);
@@ -66,6 +72,7 @@ public class CategoriasService {
         return ResponseEntity.badRequest().body("Erro: categoria ja existe");
     }
 
+    @Transactional
     public ResponseEntity<?> atualizarCategoria(DadosAtualizarCategoria dados) {
         if (categoriasRepository.existsById(dados.id())) {
             var categoria = categoriasRepository.getReferenceById(dados.id());
@@ -76,5 +83,9 @@ public class CategoriasService {
             return  ResponseEntity.badRequest().body("Erro: Categoria desativada.");
         }
         return  ResponseEntity.badRequest().body("Erro: Não encontrado.");
+    }
+
+    public Page<DadosListagemVideo> listarCategoriaEVideo(Long id, Pageable paginacao) {
+        return videosRepository.findAllByCategoriaId(id, paginacao).map(DadosListagemVideo::new);
     }
 }

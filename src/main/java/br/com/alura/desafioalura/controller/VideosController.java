@@ -8,11 +8,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/videos")
@@ -22,8 +21,8 @@ public class VideosController {
     private VideosService videosService;
 
     @GetMapping
-    public Page<DadosListagemVideo> listarVideos(Pageable paginacao){
-        return videosService.listarVideos(paginacao);
+    public Page<DadosListagemVideo> listarVideos(@PageableDefault(size = 5) Pageable paginacao, @RequestParam(required = false) String search){
+        return videosService.listarVideos(paginacao, search);
     }
 
     @GetMapping("/{id}")

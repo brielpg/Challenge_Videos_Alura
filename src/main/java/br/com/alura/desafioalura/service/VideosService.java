@@ -4,6 +4,7 @@ import br.com.alura.desafioalura.dto.videos.DadosAtualizarVideo;
 import br.com.alura.desafioalura.dto.videos.DadosCriarVideo;
 import br.com.alura.desafioalura.dto.videos.DadosListagemVideo;
 import br.com.alura.desafioalura.models.Video;
+import br.com.alura.desafioalura.repositories.CategoriasRepository;
 import br.com.alura.desafioalura.repositories.VideosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,8 +20,11 @@ public class VideosService {
     @Autowired
     private VideosRepository videosRepository;
 
-    public Page<DadosListagemVideo> listarVideos(Pageable paginacao){
-        return videosRepository.findAllByAtivoTrue(paginacao).map(DadosListagemVideo::new);
+    public Page<DadosListagemVideo> listarVideos(Pageable paginacao, String search){
+        if (search == null || search.isEmpty()) {
+            return videosRepository.findAllByAtivoTrue(paginacao).map(DadosListagemVideo::new);
+        }
+        return videosRepository.findByTituloContainingAndAtivoTrue(search, paginacao).map(DadosListagemVideo::new);
     }
 
     public ResponseEntity<?> listarVideoPorId(Long id) {

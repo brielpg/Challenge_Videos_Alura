@@ -3,6 +3,7 @@ package br.com.alura.desafioalura.controller;
 import br.com.alura.desafioalura.dto.categorias.DadosAtualizarCategoria;
 import br.com.alura.desafioalura.dto.categorias.DadosCriarCategoria;
 import br.com.alura.desafioalura.dto.categorias.DadosListagemCategoria;
+import br.com.alura.desafioalura.dto.videos.DadosListagemVideo;
 import br.com.alura.desafioalura.service.CategoriasService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class CategoriasController {
     @GetMapping
     public Page<DadosListagemCategoria> listarCategorias(Pageable paginacao){
         return categoriasService.listarCategorias(paginacao);
+    }
+
+    @GetMapping("/{id}/videos")
+    public Page<DadosListagemVideo> listarCategoriaEVideo(@PathVariable Long id, Pageable paginacao){
+        return categoriasService.listarCategoriaEVideo(id, paginacao);
     }
 
     @GetMapping("/{id}")
